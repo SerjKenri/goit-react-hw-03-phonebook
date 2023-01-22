@@ -20,13 +20,13 @@ export class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    if(prevState.contacts.length !== 0 && prevState.contacts.length !== this.state.contacts.length) {
+    if(prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contact', JSON.stringify(this.state.contacts));
     }
   };
 
   handleSubmit = e => {
-    const id = nanoid();
+    const id = nanoid(5);
     const name = e.name;
     const number = e.number;
     const contactsLists = [...this.state.contacts];
@@ -34,7 +34,7 @@ export class App extends Component {
     if (contactsLists.findIndex(contact => name === contact.name) !== -1) {
       alert(`${name} is already in contacts.`);
     } else {
-      contactsLists.push({ name, id, number });
+      contactsLists.push({ id, name, number });
     }
 
     this.setState({ contacts: contactsLists });
